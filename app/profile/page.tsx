@@ -14,6 +14,7 @@ import { toast } from "sonner"
 import { ArrowLeft, User, Mail, MapPin, Calendar, Phone, Loader2 } from "lucide-react"
 import Link from "next/link"
 import { updateProfileSchema, type UpdateProfileInput } from "@/lib/validations"
+import { formatPhoneNumber } from "@/lib/utils"
 
 export default function ProfilePage() {
   const { data: session, status, update } = useSession()
@@ -255,6 +256,14 @@ export default function ProfilePage() {
                         : "N/A"}
                     </span>
                   </div>
+                  {userProfile?.phone && (
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Phone Number:</span>
+                      <span className="font-medium">
+                        {formatPhoneNumber(userProfile.phone)}
+                      </span>
+                    </div>
+                  )}
                 </div>
               </div>
 
