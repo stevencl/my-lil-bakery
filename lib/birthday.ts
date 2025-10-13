@@ -47,7 +47,7 @@ export function getBirthdayInfo(
     return null
   }
   
-  const daysUntilBirthday = getDaysUntilBirthday(birthDate, referenceDate)
+  const daysUntilBirthday = getDaysUntilBirthday(/*birthDate, referenceDate*/)
   const isBirthdayToday = daysUntilBirthday === 0
   const isUpcoming = daysUntilBirthday > 0 && daysUntilBirthday <= 7
   
