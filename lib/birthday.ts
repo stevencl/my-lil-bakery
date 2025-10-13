@@ -17,8 +17,8 @@ export interface BirthdayInfo {
  * @returns Number of days until the next birthday (0 if today is the birthday)
  */
 export function getDaysUntilBirthday(
-  dateOfBirth: Date | string,
-  referenceDate: Date = new Date()
+//  dateOfBirth: Date | string,
+//  referenceDate: Date = new Date()
 ): number {
 
   

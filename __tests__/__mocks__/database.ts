@@ -42,6 +42,8 @@ export const createMockUser = (overrides: Partial<User> = {}): User => ({
   emailVerified: null,
   image: null,
   phone: null,
+  address: null,
+  dateOfBirth: null,
   role: "customer",
   createdAt: new Date("2024-01-01"),
   updatedAt: new Date("2024-01-01"),

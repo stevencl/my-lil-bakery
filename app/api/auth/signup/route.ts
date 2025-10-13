@@ -30,8 +30,8 @@ export async function POST(request: NextRequest) {
         name,
         email,
         password: hashedPassword,
-        address: address || undefined,
-        dateOfBirth: dateOfBirth ? new Date(dateOfBirth) : undefined,
+        address: address || null,
+        dateOfBirth: dateOfBirth ? new Date(dateOfBirth) : null,
       },
       select: {
         id: true,
