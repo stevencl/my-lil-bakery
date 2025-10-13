@@ -46,6 +46,8 @@ export default function SignUpPage() {
           email: data.email,
           password: data.password,
           confirmPassword: data.confirmPassword,
+          address: data.address,
+          dateOfBirth: data.dateOfBirth,
           terms: data.terms,
         }),
       })
@@ -160,6 +162,29 @@ export default function SignUpPage() {
                 className={errors.email ? "border-red-500" : ""}
               />
               {errors.email && <p className="text-sm text-red-500">{errors.email.message}</p>}
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="address">Address (Optional)</Label>
+              <Input
+                id="address"
+                type="text"
+                placeholder="Enter your address"
+                {...register("address")}
+                className={errors.address ? "border-red-500" : ""}
+              />
+              {errors.address && <p className="text-sm text-red-500">{errors.address.message}</p>}
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="dateOfBirth">Date of Birth (Optional)</Label>
+              <Input
+                id="dateOfBirth"
+                type="date"
+                {...register("dateOfBirth")}
+                className={errors.dateOfBirth ? "border-red-500" : ""}
+              />
+              {errors.dateOfBirth && <p className="text-sm text-red-500">{errors.dateOfBirth.message}</p>}
             </div>
 
             <div className="space-y-2">

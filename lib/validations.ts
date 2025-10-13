@@ -28,6 +28,28 @@ export const signUpSchema = z
     email,
     password,
     confirmPassword: z.string(),
+    address: z
+      .string()
+      .min(5, "Address must be at least 5 characters")
+      .max(200, "Address must be less than 200 characters")
+      .optional()
+      .or(z.literal("")),
+    dateOfBirth: z
+      .string()
+      .refine((date) => {
+        if (!date) return true // Optional field
+        const parsed = new Date(date)
+        return !isNaN(parsed.getTime())
+      }, "Invalid date format")
+      .refine((date) => {
+        if (!date) return true
+        const parsed = new Date(date)
+        const today = new Date()
+        const age = today.getFullYear() - parsed.getFullYear()
+        return age >= 13 && age <= 120
+      }, "You must be at least 13 years old")
+      .optional()
+      .or(z.literal("")),
     terms: z.boolean().refine((val) => val === true, "You must accept the terms and conditions"),
   })
   .refine((data) => data.password === data.confirmPassword, {

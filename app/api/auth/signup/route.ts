@@ -9,7 +9,7 @@ export async function POST(request: NextRequest) {
     const body = await request.json()
 
     const validatedData = signUpSchema.parse(body)
-    const { name, email, password } = validatedData
+    const { name, email, password, address, dateOfBirth } = validatedData
 
     const existingUser = await prisma.user.findUnique({
       where: { email },
@@ -30,6 +30,8 @@ export async function POST(request: NextRequest) {
         name,
         email,
         password: hashedPassword,
+        address: address || undefined,
+        dateOfBirth: dateOfBirth ? new Date(dateOfBirth) : undefined,
       },
       select: {
         id: true,
