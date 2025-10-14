@@ -11,7 +11,7 @@ import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import { toast } from "sonner"
-import { ArrowLeft, User, Mail, MapPin, Calendar, Phone, Loader2 } from "lucide-react"
+import { ArrowLeft, User, Mail, MapPin, Calendar, Phone, Loader2, ShoppingBag } from "lucide-react"
 import Link from "next/link"
 import { updateProfileSchema, type UpdateProfileInput } from "@/lib/validations"
 import { formatPhoneNumber } from "@/lib/utils"
@@ -265,6 +265,19 @@ export default function ProfilePage() {
                     </div>
                   )}
                 </div>
+              </div>
+
+              <Separator />
+
+              {/* Quick Links */}
+              <div>
+                <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
+                <Link href="/orders">
+                  <Button variant="outline" className="w-full justify-start">
+                    <ShoppingBag className="mr-2 h-4 w-4" />
+                    View My Orders
+                  </Button>
+                </Link>
               </div>
 
               <Separator />

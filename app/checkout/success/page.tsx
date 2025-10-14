@@ -1,19 +1,29 @@
 "use client"
 
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import Link from "next/link"
+import { useSearchParams } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { CheckCircle, Home, ShoppingBag, Calendar } from "lucide-react"
-import { useCart } from "@/components/cart-context"
+import { CheckCircle, Home, ShoppingBag, Calendar, Package } from "lucide-react"
 
 export default function CheckoutSuccessPage() {
-  const { clearCart } = useCart()
+  const searchParams = useSearchParams()
+  const [orderReference, setOrderReference] = useState<string>("")
 
   useEffect(() => {
-    // Clear the cart when the success page is loaded
-    clearCart()
-  }, [clearCart])
+    // Cart is already cleared in cart-sidebar before navigation
+    
+    // Get order ID from URL and format it
+    const orderId = searchParams.get('orderId')
+    if (orderId) {
+      // Take last 9 characters of the order ID and convert to uppercase
+      setOrderReference(orderId.slice(-9).toUpperCase())
+    } else {
+      // Fallback to a random reference if no order ID
+      setOrderReference(Math.random().toString(36).substr(2, 9).toUpperCase())
+    }
+  }, [searchParams])
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-pink-50 via-cream-50 to-yellow-50 flex items-center justify-center p-4">
@@ -29,9 +39,11 @@ export default function CheckoutSuccessPage() {
             <p className="text-gray-600">
               Thank you for your order! We&apos;ll send you an email confirmation shortly.
             </p>
-            <p className="text-sm text-gray-500">
-              Order reference: #{Math.random().toString(36).substr(2, 9).toUpperCase()}
-            </p>
+            {orderReference && (
+              <p className="text-sm text-gray-500">
+                Order reference: #{orderReference}
+              </p>
+            )}
           </div>
 
           <div className="bg-pink-50 rounded-lg p-4 space-y-3">
@@ -57,6 +69,12 @@ export default function CheckoutSuccessPage() {
 
           <div className="flex flex-col gap-3">
             <Button asChild className="w-full bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700">
+              <Link href="/orders">
+                <Package className="h-4 w-4 mr-2" />
+                View My Orders
+              </Link>
+            </Button>
+            <Button asChild variant="outline" className="w-full">
               <Link href="/">
                 <Home className="h-4 w-4 mr-2" />
                 Back to Home

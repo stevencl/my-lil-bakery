@@ -155,8 +155,11 @@ export function CartSidebar({ isOpen = false, onClose }: CartSidebarProps) {
       });
 
       if (!response.ok) {
-        throw new Error('Failed to create order')
+        const errorData = await response.json()
+        throw new Error(errorData.error || 'Failed to create order')
       }
+
+      const order = await response.json()
 
       toast.success("Order Placed Successfully!")
       clearCart()
@@ -171,9 +174,19 @@ export function CartSidebar({ isOpen = false, onClose }: CartSidebarProps) {
       setShowCheckout(false)
       
       onClose?.()
-      router.push("/checkout/success")
+      router.push(`/checkout/success?orderId=${order.id}`)
     } catch (error) {
-      toast.error("There was an error placing your order. Please try again.")
+      console.error("Error placing order:", error)
+      const errorMessage = error instanceof Error ? error.message : "There was an error placing your order."
+      
+      // If the error is about products not existing, suggest clearing the cart
+      if (errorMessage.includes('no longer exist')) {
+        toast.error(errorMessage + " Clear your cart and try again.", {
+          duration: 6000
+        })
+      } else {
+        toast.error(errorMessage)
+      }
     } finally {
       setIsCheckingOut(false)
     }

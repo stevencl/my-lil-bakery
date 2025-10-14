@@ -8,6 +8,15 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(order)
   } catch (error) {
     console.error("Error creating order:", error)
+    
+    // Check if it's our custom error about missing products
+    if (error instanceof Error && error.message.includes('no longer exist')) {
+      return NextResponse.json(
+        { error: error.message },
+        { status: 400 }
+      )
+    }
+    
     return NextResponse.json(
       { error: "Failed to create order" },
       { status: 500 }

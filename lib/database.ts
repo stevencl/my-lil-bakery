@@ -120,6 +120,39 @@ export async function createOrder(orderData: {
     price: number
   }>
 }) {
+  // Validate that all products exist
+  const productIds = orderData.items.map(item => item.productId)
+  const existingProducts = await prisma.product.findMany({
+    where: {
+      id: {
+        in: productIds
+      }
+    },
+    select: {
+      id: true
+    }
+  })
+
+  const existingProductIds = new Set(existingProducts.map((p: { id: string }) => p.id))
+  const missingProductIds = productIds.filter(id => !existingProductIds.has(id))
+
+  if (missingProductIds.length > 0) {
+    throw new Error(`The following products no longer exist: ${missingProductIds.join(', ')}. Please refresh your cart.`)
+  }
+
+  // Validate that the user exists if a userId is provided
+  if (orderData.userId) {
+    const user = await prisma.user.findUnique({
+      where: { id: orderData.userId },
+      select: { id: true }
+    })
+    
+    if (!user) {
+      // User doesn't exist (session is stale), proceed as guest order
+      orderData.userId = null
+    }
+  }
+
   const total = orderData.items.reduce((sum, item) => sum + item.price * item.quantity, 0)
 
   return await prisma.order.create({
@@ -154,6 +187,27 @@ export async function createOrder(orderData: {
 export async function getOrdersByUser(userId: string) {
   return await prisma.order.findMany({
     where: { userId },
+    include: {
+      orderItems: {
+        include: {
+          product: true,
+        },
+      },
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  })
+}
+
+export async function getOrdersByUserOrEmail(userId: string | null, email: string) {
+  return await prisma.order.findMany({
+    where: {
+      OR: [
+        { userId: userId },
+        { customerEmail: email.toLowerCase() },
+      ],
+    },
     include: {
       orderItems: {
         include: {

@@ -1,7 +1,7 @@
 "use client"
 
 import type React from "react"
-import { createContext, useContext, useState, useEffect } from "react"
+import { createContext, useContext, useState, useEffect, useCallback } from "react"
 import type { Product as PrismaProduct } from "@prisma/client"
 
 export interface Product extends PrismaProduct {
@@ -70,9 +70,9 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     setCartItems((prev) => prev.map((item) => (item.id === productId ? { ...item, quantity } : item)))
   }
 
-  const clearCart = () => {
+  const clearCart = useCallback(() => {
     setCartItems([])
-  }
+  }, [])
 
   const getCartTotal = () => {
     return cartItems.reduce((total, item) => total + item.price * item.quantity, 0)
