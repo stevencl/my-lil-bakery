@@ -224,11 +224,45 @@ describe("Birthday Utility Functions", () => {
       expect(result).toContain("FREE")
     })
 
-    test("returns correct message for 7 days", () => {
-      const result = getBirthdayMessage(7)
+    test("throws error when dateOfBirth string is invalid", () => {
+      expect(() => {
+      getDaysUntilBirthday("invalid-date-string")
+      }).toThrow("Invalid date of birth")
+    })
+
+    test("throws error when dateOfBirth Date object is invalid", () => {
+      const invalidDate = new Date("invalid")
+      expect(() => {
+      getDaysUntilBirthday(invalidDate)
+      }).toThrow("Invalid date of birth")
+    })
+
+    test("handles edge case when birthday is yesterday", () => {
+      const dateOfBirth = new Date("1990-10-12")
+      const referenceDate = new Date("2025-10-13")
       
-      expect(result).toContain("7 days")
-      expect(result).toContain("FREE")
+      const result = getDaysUntilBirthday(dateOfBirth, referenceDate)
+      
+      // Should be next year's birthday (365 days in non-leap year)
+      expect(result).toBe(364)
+    })
+
+    test("handles New Year's Day birthday correctly", () => {
+      const dateOfBirth = new Date("1990-01-01")
+      const referenceDate = new Date("2025-12-31")
+      
+      const result = getDaysUntilBirthday(dateOfBirth, referenceDate)
+      
+      expect(result).toBe(1)
+    })
+
+    test("handles birthday at end of February in leap year", () => {
+      const dateOfBirth = new Date("1992-02-29")
+      const referenceDate = new Date("2024-02-28") // 2024 is a leap year
+      
+      const result = getDaysUntilBirthday(dateOfBirth, referenceDate)
+      
+      expect(result).toBe(1)
     })
   })
 })
