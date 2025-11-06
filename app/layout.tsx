@@ -5,6 +5,7 @@ import "./globals.css"
 import { CartProvider } from "@/components/cart-context"
 import { SessionProvider } from "@/components/session-provider"
 import { Toaster } from "@/components/ui/sonner"
+import { SkipLink } from "@/components/skip-link"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -22,6 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
+        <SkipLink />
         <SessionProvider>
           <CartProvider>
             {children}

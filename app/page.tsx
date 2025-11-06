@@ -138,12 +138,13 @@ export default function HomePage() {
       </header>
 
       {/* Hero Section */}
-      <section className="py-20 px-4">
+      <main id="main-content">
+      <section className="py-20 px-4" aria-labelledby="hero-heading">
         <div className="container mx-auto text-center">
           <Badge className="bg-pink-100 text-pink-700 hover:bg-pink-200 rounded-full px-4 py-2 mb-6">
             ✨ Handcrafted with Love
           </Badge>
-          <h1 className="text-5xl md:text-7xl font-bold text-gray-800 mb-6">
+          <h1 className="text-5xl md:text-7xl font-bold text-gray-800 mb-6" id="hero-heading">
             Sweet Dreams
             <span className="block bg-gradient-to-r from-pink-600 to-purple-600 bg-clip-text text-transparent">
               Come True
@@ -171,13 +172,13 @@ export default function HomePage() {
       </section>
 
       {/* Featured Products */}
-      <section className="py-16 px-4">
+      <section className="py-16 px-4" aria-labelledby="featured-heading">
         <div className="container mx-auto">
           <div className="text-center mb-12">
             <Badge className="bg-yellow-100 text-yellow-700 hover:bg-yellow-200 rounded-full px-4 py-2 mb-4">
               🌟 Featured
             </Badge>
-            <h2 className="text-4xl font-bold text-gray-800 mb-4">Our Signature Creations</h2>
+            <h2 className="text-4xl font-bold text-gray-800 mb-4" id="featured-heading">Our Signature Creations</h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
               Discover our most beloved treats, crafted with premium ingredients and lots of love.
             </p>
@@ -235,11 +236,11 @@ export default function HomePage() {
       </section>
 
       {/* Products Section */}
-      <section id="products" className="py-16 px-4 bg-white/50">
+      <section id="products" className="py-16 px-4 bg-white/50" aria-labelledby="products-heading">
         <div className="container mx-auto">
           <div className="text-center mb-12">
             <Badge className="bg-blue-100 text-blue-700 hover:bg-blue-200 rounded-full px-4 py-2 mb-4">🛍️ Shop</Badge>
-            <h2 className="text-4xl font-bold text-gray-800 mb-4">All Products</h2>
+            <h2 className="text-4xl font-bold text-gray-800 mb-4" id="products-heading">All Products</h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
               Browse our complete collection of freshly baked goods, from classic favorites to seasonal specials.
             </p>
@@ -348,14 +349,14 @@ export default function HomePage() {
       </section>
 
       {/* About Section */}
-      <section id="about" className="py-16 px-4">
+      <section id="about" className="py-16 px-4" aria-labelledby="about-heading">
         <div className="container mx-auto">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <Badge className="bg-green-100 text-green-700 hover:bg-green-200 rounded-full px-4 py-2 mb-6">
                 🌱 Our Story
               </Badge>
-              <h2 className="text-4xl font-bold text-gray-800 mb-6">Baking Dreams Since 2020</h2>
+              <h2 className="text-4xl font-bold text-gray-800 mb-6" id="about-heading">Baking Dreams Since 2020</h2>
               <p className="text-gray-600 mb-6 leading-relaxed">
                 Sweet Dreams Bakery was born from a passion for creating moments of joy through exceptional baked goods.
                 Every item is handcrafted with premium ingredients and baked fresh daily in our kitchen.
@@ -411,13 +412,13 @@ export default function HomePage() {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="py-16 px-4 bg-white/50">
+      <section id="contact" className="py-16 px-4 bg-white/50" aria-labelledby="contact-heading">
         <div className="container mx-auto">
           <div className="text-center mb-12">
             <Badge className="bg-orange-100 text-orange-700 hover:bg-orange-200 rounded-full px-4 py-2 mb-4">
               📞 Get in Touch
             </Badge>
-            <h2 className="text-4xl font-bold text-gray-800 mb-4">Visit Our Bakery</h2>
+            <h2 className="text-4xl font-bold text-gray-800 mb-4" id="contact-heading">Visit Our Bakery</h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
               Come visit us in person or get in touch for custom orders and special requests.
             </p>
@@ -462,6 +463,7 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+      </main>
 
       {/* Footer */}
       <footer className="bg-gray-800 text-white py-12 px-4">
