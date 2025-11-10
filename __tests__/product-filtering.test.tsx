@@ -2,6 +2,7 @@ import type React from "react"
 import { render, screen, fireEvent, waitFor } from "@testing-library/react"
 import "@testing-library/jest-dom";
 import { CartProvider } from "@/components/cart-context"
+import { FavoritesProvider } from "@/components/favorites-context"
 import HomePage from "@/app/page";
 
 // Mock Next.js Image component
@@ -12,7 +13,11 @@ jest.mock("next/image", () => {
 })
 
 const renderWithCart = (component: React.ReactElement) => {
-  return render(<CartProvider>{component}</CartProvider>)
+  return render(
+    <FavoritesProvider>
+      <CartProvider>{component}</CartProvider>
+    </FavoritesProvider>
+  )
 }
 
 describe("Product Filtering", () => {
