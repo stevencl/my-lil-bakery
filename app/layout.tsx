@@ -3,6 +3,7 @@ import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import "./globals.css"
 import { CartProvider } from "@/components/cart-context"
+import { FavoritesProvider } from "@/components/favorites-context"
 import { SessionProvider } from "@/components/session-provider"
 import { Toaster } from "@/components/ui/sonner"
 import { BirthdayNotification } from "@/components/birthday-notification"
@@ -24,11 +25,13 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <SessionProvider>
-          <CartProvider>
-            <BirthdayNotification />
-            {children}
-            <Toaster />
-          </CartProvider>
+          <FavoritesProvider>
+            <CartProvider>
+              <BirthdayNotification />
+              {children}
+              <Toaster />
+            </CartProvider>
+          </FavoritesProvider>
         </SessionProvider>
       </body>
     </html>

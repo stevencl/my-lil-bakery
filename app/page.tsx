@@ -8,8 +8,9 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { ShoppingCart, Search, Filter, Star, Clock, MapPin, Phone, Mail, Award, Users, Cake } from "lucide-react"
+import { ShoppingCart, Search, Filter, Star, Clock, MapPin, Phone, Mail, Award, Users, Cake, Heart } from "lucide-react"
 import { useCart } from "@/components/cart-context"
+import { useFavorites } from "@/components/favorites-context"
 import { CartSidebar } from "@/components/cart-sidebar"
 import type { ProductWithCategory } from "@/lib/database"
 import { AuthButton } from "@/components/auth-button";
@@ -17,6 +18,7 @@ import { useSession } from "next-auth/react";
 
 export default function HomePage() {
   const { addToCart, cartItems, toggleCart, isCartOpen } = useCart()
+  const { isFavorite, toggleFavorite } = useFavorites()
   const { data: session } = useSession()
   const [products, setProducts] = useState<ProductWithCategory[]>([])
   const [filteredProducts, setFilteredProducts] = useState<ProductWithCategory[]>([])
@@ -104,6 +106,11 @@ export default function HomePage() {
               <Link href="#products" className="text-gray-700 hover:text-pink-600 transition-colors">
                 Products
               </Link>
+              {session && (
+                <Link href="/favorites" className="text-gray-700 hover:text-pink-600 transition-colors">
+                  Favorites
+                </Link>
+              )}
               <Link href="#about" className="text-gray-700 hover:text-pink-600 transition-colors">
                 About
               </Link>
@@ -214,6 +221,22 @@ export default function HomePage() {
                       {product.preOrder && (
                         <Badge className="absolute top-3 left-3 bg-purple-500 text-white">Pre-Order</Badge>
                       )}
+                      {session && (
+                        <Button
+                          onClick={() => toggleFavorite(product)}
+                          variant="ghost"
+                          size="icon"
+                          className="absolute top-3 right-3 bg-white/80 hover:bg-white"
+                        >
+                          <Heart
+                            className={`h-5 w-5 ${
+                              isFavorite(product.id)
+                                ? "fill-red-500 text-red-500"
+                                : "text-gray-600"
+                            }`}
+                          />
+                        </Button>
+                      )}
                     </div>
                     <CardContent className="p-6">
                       <h3 className="font-bold text-lg mb-2">{product.name}</h3>
@@ -317,6 +340,22 @@ export default function HomePage() {
                     )}
                     {!product.inStock && (
                       <Badge className="absolute top-2 right-2 bg-red-500 text-white text-xs">Out of Stock</Badge>
+                    )}
+                    {session && (
+                      <Button
+                        onClick={() => toggleFavorite(product)}
+                        variant="ghost"
+                        size="icon"
+                        className="absolute bottom-2 right-2 bg-white/80 hover:bg-white h-8 w-8"
+                      >
+                        <Heart
+                          className={`h-4 w-4 ${
+                            isFavorite(product.id)
+                              ? "fill-red-500 text-red-500"
+                              : "text-gray-600"
+                          }`}
+                        />
+                      </Button>
                     )}
                   </div>
                   <CardContent className="p-4">
