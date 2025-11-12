@@ -1,12 +1,35 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react"
 import { CartProvider } from "@/components/cart-context"
+import { FavoritesProvider } from "@/components/favorites-context"
 import HomePage from "@/app/page";
+import { useSession } from "next-auth/react"
+
+// Mock next-auth
+jest.mock("next-auth/react", () => ({
+  useSession: jest.fn(),
+  SessionProvider: ({ children }: { children: React.ReactNode }) => children,
+}))
+
+// Type the mock
+const mockUseSession = useSession as jest.MockedFunction<typeof useSession>
 
 const renderWithCart = (component: React.ReactElement) => {
-  return render(<CartProvider>{component}</CartProvider>)
+  return render(
+    <FavoritesProvider>
+      <CartProvider>{component}</CartProvider>
+    </FavoritesProvider>
+  )
 }
 
 describe("HomePage", () => {
+  beforeEach(() => {
+    jest.clearAllMocks()
+    mockUseSession.mockReturnValue({
+      data: null,
+      status: "unauthenticated",
+      update: jest.fn() as any,
+    })
+  })
   test("renders main navigation", () => {
     renderWithCart(<HomePage />);
 

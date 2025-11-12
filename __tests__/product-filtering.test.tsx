@@ -2,7 +2,18 @@ import type React from "react"
 import { render, screen, fireEvent, waitFor } from "@testing-library/react"
 import "@testing-library/jest-dom";
 import { CartProvider } from "@/components/cart-context"
+import { FavoritesProvider } from "@/components/favorites-context"
 import HomePage from "@/app/page";
+import { useSession } from "next-auth/react"
+
+// Mock next-auth
+jest.mock("next-auth/react", () => ({
+  useSession: jest.fn(),
+  SessionProvider: ({ children }: { children: React.ReactNode }) => children,
+}))
+
+// Type the mock
+const mockUseSession = useSession as jest.MockedFunction<typeof useSession>
 
 // Mock Next.js Image component
 jest.mock("next/image", () => {
@@ -12,10 +23,22 @@ jest.mock("next/image", () => {
 })
 
 const renderWithCart = (component: React.ReactElement) => {
-  return render(<CartProvider>{component}</CartProvider>)
+  return render(
+    <FavoritesProvider>
+      <CartProvider>{component}</CartProvider>
+    </FavoritesProvider>
+  )
 }
 
 describe("Product Filtering", () => {
+  beforeEach(() => {
+    jest.clearAllMocks()
+    mockUseSession.mockReturnValue({
+      data: null,
+      status: "unauthenticated",
+      update: jest.fn() as any,
+    })
+  })
   test("filters products by category", async () => {
     renderWithCart(<HomePage />);
 

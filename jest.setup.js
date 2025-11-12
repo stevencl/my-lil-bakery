@@ -125,6 +125,11 @@ global.fetch = jest.fn((url) => {
       ok: true,
       json: () => Promise.resolve(mockCategories)
     })
+  } else if (url.includes('/api/favorites')) {
+    return Promise.resolve({
+      ok: true,
+      json: () => Promise.resolve([])
+    })
   } else if (url.includes('/api/orders')) {
     return mockOrdersPromise.then(orders => ({
       ok: true,
