@@ -32,7 +32,7 @@ describe("Birthday Utility Functions", () => {
       const result = getDaysUntilBirthday(dateOfBirth, referenceDate)
       
       // From Oct 15, 2025 to Jan 15, 2026
-      expect(result).toBe(93)
+      expect(result).toBe(92)
     })
 
     test("handles leap year birthdays correctly", () => {

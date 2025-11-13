@@ -17,13 +17,59 @@ export interface BirthdayInfo {
  * @returns Number of days until the next birthday (0 if today is the birthday)
  */
 export function getDaysUntilBirthday(
-//  dateOfBirth: Date | string,
-//  referenceDate: Date = new Date()
+  dateOfBirth: Date | string,
+  referenceDate: Date = new Date()
 ): number {
-
+  // Convert string to Date if needed
+  const birthDate = typeof dateOfBirth === 'string' ? new Date(dateOfBirth) : dateOfBirth
   
-  return 100 // Placeholder implementation
-
+  // Validate the date
+  if (isNaN(birthDate.getTime())) {
+    throw new Error("Invalid date of birth")
+  }
+  
+  // Normalize reference date to start of day
+  const today = new Date(referenceDate)
+  today.setHours(0, 0, 0, 0)
+  
+  // Get the birthday month and day
+  const birthMonth = birthDate.getMonth()
+  const birthDay = birthDate.getDate()
+  
+  // Calculate this year's birthday
+  let nextBirthday = new Date(today.getFullYear(), birthMonth, birthDay)
+  nextBirthday.setHours(0, 0, 0, 0)
+  
+  // Handle Feb 29 in non-leap years - move to March 1
+  if (birthMonth === 1 && birthDay === 29) {
+    const isLeapYear = (year: number) => (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0)
+    if (!isLeapYear(today.getFullYear())) {
+      nextBirthday = new Date(today.getFullYear(), 2, 1) // March 1
+      nextBirthday.setHours(0, 0, 0, 0)
+    }
+  }
+  
+  // If this year's birthday has passed, use next year
+  if (nextBirthday < today) {
+    const nextYear = today.getFullYear() + 1
+    nextBirthday = new Date(nextYear, birthMonth, birthDay)
+    nextBirthday.setHours(0, 0, 0, 0)
+    
+    // Handle Feb 29 in non-leap years for next year as well
+    if (birthMonth === 1 && birthDay === 29) {
+      const isLeapYear = (year: number) => (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0)
+      if (!isLeapYear(nextYear)) {
+        nextBirthday = new Date(nextYear, 2, 1) // March 1
+        nextBirthday.setHours(0, 0, 0, 0)
+      }
+    }
+  }
+  
+  // Calculate the difference in days
+  const diffInMs = nextBirthday.getTime() - today.getTime()
+  const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24))
+  
+  return diffInDays
 }
 
 /**
@@ -47,7 +93,7 @@ export function getBirthdayInfo(
     return null
   }
   
-  const daysUntilBirthday = getDaysUntilBirthday(/*birthDate, referenceDate*/)
+  const daysUntilBirthday = getDaysUntilBirthday(birthDate, referenceDate)
   const isBirthdayToday = daysUntilBirthday === 0
   const isUpcoming = daysUntilBirthday > 0 && daysUntilBirthday <= 7
   
