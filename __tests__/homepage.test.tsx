@@ -1,9 +1,14 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react"
 import { CartProvider } from "@/components/cart-context"
+import { FavoritesProvider } from "@/components/favorites-context"
 import HomePage from "@/app/page";
 
 const renderWithCart = (component: React.ReactElement) => {
-  return render(<CartProvider>{component}</CartProvider>)
+  return render(
+    <FavoritesProvider>
+      <CartProvider>{component}</CartProvider>
+    </FavoritesProvider>
+  )
 }
 
 describe("HomePage", () => {
