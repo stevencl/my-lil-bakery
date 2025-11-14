@@ -1,8 +1,8 @@
 import { prisma } from "@/lib/prisma"
-import type { Product, Category, User, Order, OrderItem } from "@prisma/client"
+import type { Product, Category, User, Order, OrderItem, Favorite } from "@prisma/client"
 
 // Re-export Prisma types
-export type { Product, Category, User, Order, OrderItem } from "@prisma/client"
+export type { Product, Category, User, Order, OrderItem, Favorite } from "@prisma/client"
 
 // Type exports
 export type ProductWithCategory = Product & {
