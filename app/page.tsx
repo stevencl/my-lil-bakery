@@ -8,11 +8,12 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { ShoppingCart, Search, Filter, Star, Clock, MapPin, Phone, Mail, Award, Users, Cake } from "lucide-react"
+import { ShoppingCart, Search, Filter, Star, MapPin, Phone, Mail, Award, Users, Cake } from "lucide-react"
 import { useCart } from "@/components/cart-context"
 import { CartSidebar } from "@/components/cart-sidebar"
 import type { ProductWithCategory } from "@/lib/database"
-import { AuthButton } from "@/components/auth-button";
+import { AuthButton } from "@/components/auth-button"
+import { ProductCard } from "@/components/product-card";
 import { useSession } from "next-auth/react";
 
 export default function HomePage() {
@@ -199,36 +200,12 @@ export default function HomePage() {
                   </Card>
                 ))
               : featuredProducts.map((product) => (
-                  <Card
+                  <ProductCard
                     key={product.id}
-                    className="bg-white/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl transition-all duration-300 group"
-                  >
-                    <div className="relative overflow-hidden rounded-t-lg">
-                      <Image
-                        src={product.image || "/placeholder.svg"}
-                        alt={product.name}
-                        width={300}
-                        height={300}
-                        className="w-full aspect-square object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                      {product.preOrder && (
-                        <Badge className="absolute top-3 left-3 bg-purple-500 text-white">Pre-Order</Badge>
-                      )}
-                    </div>
-                    <CardContent className="p-6">
-                      <h3 className="font-bold text-lg mb-2">{product.name}</h3>
-                      <p className="text-gray-600 text-sm mb-4">{product.description}</p>
-                      <div className="flex items-center justify-between">
-                        <span className="text-2xl font-bold text-pink-600">${product.price}</span>
-                        <Button
-                          onClick={() => addToCart(product)}
-                          className="bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700"
-                        >
-                          Add to Cart
-                        </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
+                    product={product}
+                    onAddToCart={addToCart}
+                    variant="featured"
+                  />
                 ))}
           </div>
         </div>
@@ -300,47 +277,11 @@ export default function HomePage() {
               </div>
             ) : (
               filteredProducts.map((product) => (
-                <Card
+                <ProductCard
                   key={product.id}
-                  className="bg-white/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl transition-all duration-300 group"
-                >
-                  <div className="relative overflow-hidden rounded-t-lg">
-                    <Image
-                      src={product.image || "/placeholder.svg"}
-                      alt={product.name}
-                      width={300}
-                      height={300}
-                      className="w-full aspect-square object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
-                    {product.preOrder && (
-                      <Badge className="absolute top-2 left-2 bg-purple-500 text-white text-xs">Pre-Order</Badge>
-                    )}
-                    {!product.inStock && (
-                      <Badge className="absolute top-2 right-2 bg-red-500 text-white text-xs">Out of Stock</Badge>
-                    )}
-                  </div>
-                  <CardContent className="p-4">
-                    <h3 className="font-semibold mb-1 line-clamp-1">{product.name}</h3>
-                    <p className="text-gray-600 text-sm mb-3 line-clamp-2">{product.description}</p>
-                    <div className="flex items-center justify-between">
-                      <span className="text-lg font-bold text-pink-600">${product.price}</span>
-                      <Button
-                        onClick={() => addToCart(product)}
-                        size="sm"
-                        disabled={!product.inStock}
-                        className="bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 disabled:opacity-50"
-                      >
-                        {product.inStock ? "Add to Cart" : "Out of Stock"}
-                      </Button>
-                    </div>
-                    {product.preOrder && (
-                      <p className="text-xs text-purple-600 mt-2 flex items-center">
-                        <Clock className="h-3 w-3 mr-1" />
-                        Min {product.minOrderTime}h notice required
-                      </p>
-                    )}
-                  </CardContent>
-                </Card>
+                  product={product}
+                  onAddToCart={addToCart}
+                />
               ))
             )}
           </div>
