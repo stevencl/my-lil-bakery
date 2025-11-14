@@ -29,7 +29,10 @@ export function formatPhoneNumber(
     }
   } else if (format === 'international') {
     // International format: +1 555 123 4567
-    if (cleaned.length >= 10) {
+    if (cleaned.length === 10) {
+      // Assume US country code for 10-digit numbers
+      return `+1 ${cleaned.slice(0, 3)} ${cleaned.slice(3, 6)} ${cleaned.slice(6)}`
+    } else if (cleaned.length > 10) {
       const countryCode = cleaned.slice(0, cleaned.length - 10)
       const rest = cleaned.slice(cleaned.length - 10)
       return `+${countryCode} ${rest.slice(0, 3)} ${rest.slice(3, 6)} ${rest.slice(6)}`
