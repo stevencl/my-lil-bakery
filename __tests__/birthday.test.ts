@@ -70,6 +70,16 @@ describe("Birthday Utility Functions", () => {
       
       expect(result).toBe(1)
     })
+
+    test("handles edge case when birthday is yesterday", () => {
+      const dateOfBirth = new Date("1990-10-12")
+      const referenceDate = new Date("2025-10-13")
+      
+      const result = getDaysUntilBirthday(dateOfBirth, referenceDate)
+      
+      // Should be next year's birthday (364 days until Oct 12, 2026)
+      expect(result).toBe(364)
+    })
   })
 
   describe("getBirthdayInfo", () => {
@@ -235,16 +245,6 @@ describe("Birthday Utility Functions", () => {
       expect(() => {
       getDaysUntilBirthday(invalidDate)
       }).toThrow("Invalid date of birth")
-    })
-
-    test("handles edge case when birthday is yesterday", () => {
-      const dateOfBirth = new Date("1990-10-12")
-      const referenceDate = new Date("2025-10-13")
-      
-      const result = getDaysUntilBirthday(dateOfBirth, referenceDate)
-      
-      // Should be next year's birthday (365 days in non-leap year)
-      expect(result).toBe(364)
     })
 
     test("handles New Year's Day birthday correctly", () => {
