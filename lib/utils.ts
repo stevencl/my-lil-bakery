@@ -14,31 +14,8 @@ export function formatPhoneNumber(
   format: 'US' | 'international' = 'US'
 ): string {
   if (!phoneNumber) return ''
+  else return phoneNumber
   
-  // Remove all non-digit characters
-  const cleaned = phoneNumber.replace(/\D/g, '')
-  
-  if (format === 'US') {
-    // US format: (555) 123-4567
-    if (cleaned.length === 10) {
-      return `(${cleaned.slice(0, 3)}) ${cleaned.slice(3, 6)}-${cleaned.slice(6)}`
-    }
-    // US format with country code: +1 (555) 123-4567
-    if (cleaned.length === 11 && cleaned.startsWith('1')) {
-      return `+1 (${cleaned.slice(1, 4)}) ${cleaned.slice(4, 7)}-${cleaned.slice(7)}`
-    }
-  } else if (format === 'international') {
-    // International format: +1 555 123 4567
-    if (cleaned.length === 10) {
-      // Assume US country code for 10-digit numbers
-      return `+1 ${cleaned.slice(0, 3)} ${cleaned.slice(3, 6)} ${cleaned.slice(6)}`
-    } else if (cleaned.length > 10) {
-      const countryCode = cleaned.slice(0, cleaned.length - 10)
-      const rest = cleaned.slice(cleaned.length - 10)
-      return `+${countryCode} ${rest.slice(0, 3)} ${rest.slice(3, 6)} ${rest.slice(6)}`
-    }
-  }
-  
-  // Return original if no format matches
-  return phoneNumber
+  // write code to return the properly formatted phone number 
+
 }

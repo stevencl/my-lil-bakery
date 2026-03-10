@@ -8,14 +8,13 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { ShoppingCart, Search, Filter, Star, MapPin, Phone, Mail, Award, Users, Cake, User } from "lucide-react"
+import { ShoppingCart, Search, Filter, Star, MapPin, Phone, Mail, Award, Users, Cake } from "lucide-react"
 import { useCart } from "@/components/cart-context"
 import { CartSidebar } from "@/components/cart-sidebar"
 import type { ProductWithCategory } from "@/lib/database"
 import { AuthButton } from "@/components/auth-button"
 import { ProductCard } from "@/components/product-card";
 import { useSession } from "next-auth/react";
-import { formatPhoneNumber } from "@/lib/utils"
 
 export default function HomePage() {
   const { addToCart, cartItems, toggleCart, isCartOpen } = useCart()
@@ -26,7 +25,6 @@ export default function HomePage() {
   const [selectedCategory, setSelectedCategory] = useState("all")
   const [sortBy, setSortBy] = useState("name")
   const [loading, setLoading] = useState(true)
-  const [userProfile, setUserProfile] = useState<any>(null)
 
   useEffect(() => {
     const loadProducts = async () => {
@@ -48,25 +46,6 @@ export default function HomePage() {
 
     loadProducts()
   }, [])
-
-  // Fetch user profile when logged in
-  useEffect(() => {
-    const fetchProfile = async () => {
-      if (session?.user && (session.user as any)?.id) {
-        try {
-          const response = await fetch("/api/profile")
-          if (response.ok) {
-            const data = await response.json()
-            setUserProfile(data.user)
-          }
-        } catch (error) {
-          console.error("Failed to fetch profile:", error)
-        }
-      }
-    }
-
-    fetchProfile()
-  }, [session])
 
   useEffect(() => {
     const filtered = products.filter((product) => {
@@ -424,71 +403,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
-      {/* Logged-in User Information Section */}
-      {session && userProfile && (
-        <section className="py-8 px-4 bg-gradient-to-br from-pink-50 via-cream-50 to-yellow-50">
-          <div className="container mx-auto max-w-2xl">
-            <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg">
-              <CardContent className="p-6">
-                <div className="flex items-center gap-4 mb-4">
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-pink-400 to-purple-600 flex items-center justify-center">
-                    <User className="h-6 w-6 text-white" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-gray-800">Account Information</h3>
-                    <p className="text-sm text-gray-600">Your profile details (read-only)</p>
-                  </div>
-                </div>
-                
-                <div className="space-y-3 text-sm">
-                  <div className="grid grid-cols-2 gap-x-4 py-2 border-b border-gray-100">
-                    <span className="text-gray-600 font-medium">Name:</span>
-                    <span className="text-gray-800">{userProfile.name || "Not provided"}</span>
-                  </div>
-                  
-                  <div className="grid grid-cols-2 gap-x-4 py-2 border-b border-gray-100">
-                    <span className="text-gray-600 font-medium">Email:</span>
-                    <span className="text-gray-800">{userProfile.email}</span>
-                  </div>
-                  
-                  {userProfile.phone && (
-                    <div className="grid grid-cols-2 gap-x-4 py-2 border-b border-gray-100">
-                      <span className="text-gray-600 font-medium">Phone:</span>
-                      <span className="text-gray-800">{formatPhoneNumber(userProfile.phone)}</span>
-                    </div>
-                  )}
-                  
-                  {userProfile.address && (
-                    <div className="grid grid-cols-2 gap-x-4 py-2 border-b border-gray-100">
-                      <span className="text-gray-600 font-medium">Address:</span>
-                      <span className="text-gray-800">{userProfile.address}</span>
-                    </div>
-                  )}
-                  
-                  <div className="grid grid-cols-2 gap-x-4 py-2 border-b border-gray-100">
-                    <span className="text-gray-600 font-medium">Account Type:</span>
-                    <span className="text-gray-800 capitalize">{(session.user as any)?.role || "Customer"}</span>
-                  </div>
-                  
-                  <div className="grid grid-cols-2 gap-x-4 py-2">
-                    <span className="text-gray-600 font-medium">Member Since:</span>
-                    <span className="text-gray-800">
-                      {userProfile.createdAt
-                        ? new Date(userProfile.createdAt).toLocaleDateString("en-US", {
-                            year: "numeric",
-                            month: "long",
-                            day: "numeric",
-                          })
-                        : "N/A"}
-                    </span>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </section>
-      )}
 
       {/* Footer */}
       <footer className="bg-gray-800 text-white py-12 px-4">
