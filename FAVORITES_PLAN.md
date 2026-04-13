@@ -56,11 +56,20 @@ Create a new page at `app/favorites/page.tsx`.
 - Show an empty state message when there are no favorites (e.g., "You haven't added any favorites yet.").
 - Products are fetched from the existing `/api/products` endpoint and filtered client-side to show only favorited items.
 
-### 1.5 Add Navigation Link
+### 1.5 Add a Favorite Toggle to the Cart / Checkout Sidebar
+
+In the cart sidebar (`components/cart-sidebar.tsx`), each cart item uses a compact horizontal layout (thumbnail, name/price, quantity controls). Add a heart icon button to each cart item row so users can favorite products while reviewing their order.
+
+- Place a small heart icon button next to the existing remove (trash) button in each cart item row.
+- Use the same filled/outline heart states as the product cards.
+- Clicking the heart calls `toggleFavorite(item.id)`.
+- This ensures users can save items they like during checkout without leaving the flow.
+
+### 1.6 Add Navigation Link
 
 Add a "My Favorites" link to the navigation bar in the header (`app/page.tsx`), next to the existing Home / Products / About / Contact links. Also consider adding a heart icon with a badge count next to the cart icon.
 
-### 1.6 Tests
+### 1.7 Tests
 
 Add tests following the patterns in the existing test suite:
 
@@ -79,6 +88,7 @@ Add tests following the patterns in the existing test suite:
 | Create | `components/favorites-context.tsx` |
 | Modify | `app/layout.tsx` — add `FavoritesProvider` |
 | Modify | `app/page.tsx` — add heart toggle to product cards, add nav link |
+| Modify | `components/cart-sidebar.tsx` — add heart toggle to cart items |
 | Create | `app/favorites/page.tsx` — favorites page |
 | Create | `__tests__/favorites-context.test.tsx` |
 
