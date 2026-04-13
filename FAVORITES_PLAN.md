@@ -124,7 +124,16 @@ Add the `FavoriteButton` to each product card on:
 
 Position the heart icon in the top-right corner of the product image, overlaying with a semi-transparent background for visibility.
 
-### 5.3 Favorites Page — `app/favorites/page.tsx`
+### 5.3 Cart & Checkout Integration — `components/cart-sidebar.tsx`
+
+Add a `FavoriteButton` to each item in the cart sidebar so users can favorite products while reviewing their cart or during checkout:
+
+- Place a small heart icon next to each cart item (alongside the existing remove/quantity controls).
+- The button uses the same `FavoriteButton` component and `FavoritesContext`, so toggle state stays in sync across the app.
+- This lets users bookmark items they enjoy for easy reordering later, even as they complete their current purchase.
+- When the cart is cleared after a successful order, favorites remain untouched since they are managed independently.
+
+### 5.4 Favorites Page — `app/favorites/page.tsx`
 
 A dedicated page at `/favorites` that:
 
@@ -133,7 +142,7 @@ A dedicated page at `/favorites` that:
 - Each card has a remove-from-favorites button and an add-to-cart button.
 - Requires authentication — redirect unauthenticated users to sign in.
 
-### 5.4 Navigation Link
+### 5.5 Navigation Link
 
 Add a "Favorites" link (heart icon + count badge) to the site header in `app/layout.tsx` (or a shared header component) alongside the existing cart icon. Show a badge with the number of favorited items.
 
@@ -162,10 +171,11 @@ Add tests in `__tests__/` following the existing Jest + React Testing Library se
 4. **Favorites context** — create `components/favorites-context.tsx` and wire into `app/layout.tsx`.
 5. **Favorite button component** — create `components/favorite-button.tsx`.
 6. **Integrate into product cards** — add favorite button to home page product cards.
-7. **Favorites page** — create `app/favorites/page.tsx`.
-8. **Header navigation** — add favorites link/badge to the site header.
-9. **Tests** — write unit and API tests.
-10. **Polish** — animations, accessibility (aria labels), responsive adjustments.
+7. **Integrate into cart & checkout** — add favorite button to cart items in `components/cart-sidebar.tsx`.
+8. **Favorites page** — create `app/favorites/page.tsx`.
+9. **Header navigation** — add favorites link/badge to the site header.
+10. **Tests** — write unit and API tests.
+11. **Polish** — animations, accessibility (aria labels), responsive adjustments.
 
 ---
 
