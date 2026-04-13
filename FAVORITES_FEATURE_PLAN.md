@@ -57,7 +57,7 @@ Allow signed-in customers to save bakery products as favorites, quickly view the
 ### 7) Rollout Steps
 1. Update Prisma schema and run migration.
 2. Implement server/data helpers.
-3. Add add/remove favorite API/server actions.
+3. Implement add/remove favorite API/server actions.
 4. Add product-card toggle UI.
 5. Build `/favorites` page and nav link.
 6. Add/update tests.
