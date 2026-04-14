@@ -144,15 +144,27 @@ A dedicated page at `/favorites` that:
 
 ### 5.5 Navigation Link
 
-Add a "Favorites" link (heart icon + count badge) to the site header in `app/layout.tsx` (or a shared header component) alongside the existing cart icon. Show a badge with the number of favorited items.
+Add a "Favorites" link (heart icon + count badge) in two places:
+
+- **Site header** — the header is currently defined inline in `app/page.tsx` (lines 88–118). Add a heart icon button with a count badge next to the existing cart icon button (line 122), following the same `Button variant="outline" size="icon"` + `Badge` pattern already used for the cart.
+- **User dropdown** — in `components/auth-button.tsx`, add a "My Favorites" `DropdownMenuItem` linking to `/favorites` (alongside the existing "My Orders" link), using the `Heart` icon from `lucide-react`.
 
 ---
 
-## 6. Testing
+## 6. Accessibility
+
+- All `FavoriteButton` instances must include descriptive `aria-label` attributes (e.g., `aria-label="Add Chocolate Cake to favorites"` / `aria-label="Remove Chocolate Cake from favorites"`).
+- The heart icon should convey state via `aria-pressed` on the toggle button.
+- Favorites count badge in the header should use `aria-label` to announce the count (e.g., `aria-label="3 favorites"`), matching the existing cart badge pattern.
+- Keyboard navigation: ensure the favorite button is focusable and activatable with Enter/Space.
+
+---
+
+## 7. Testing
 
 ### Unit Tests
 
-Add tests in `__tests__/` following the existing Jest + React Testing Library setup:
+Add tests in `__tests__/` following the existing Jest + React Testing Library setup (see `__tests__/cart-context.test.tsx` and `__tests__/cart-sidebar.test.tsx` for reference patterns):
 
 - **`__tests__/favorites-context.test.tsx`** — test context provider behavior: adding, removing, checking favorites, optimistic updates, and localStorage fallback for unauthenticated users.
 - **`__tests__/favorite-button.test.tsx`** — test toggle behavior, visual state (filled vs. outline heart), and sign-in prompt for unauthenticated users.
@@ -163,23 +175,23 @@ Add tests in `__tests__/` following the existing Jest + React Testing Library se
 
 ---
 
-## 7. Implementation Order
+## 8. Implementation Order
 
 1. **Schema & migration** — update `prisma/schema.prisma`, run migration.
 2. **Database helpers** — add functions to `lib/database.ts`.
 3. **API routes** — create `app/api/favorites/` endpoints.
 4. **Favorites context** — create `components/favorites-context.tsx` and wire into `app/layout.tsx`.
 5. **Favorite button component** — create `components/favorite-button.tsx`.
-6. **Integrate into product cards** — add favorite button to home page product cards.
+6. **Integrate into product cards** — add favorite button to the product grid in `app/page.tsx`.
 7. **Integrate into cart & checkout** — add favorite button to cart items in `components/cart-sidebar.tsx`.
 8. **Favorites page** — create `app/favorites/page.tsx`.
-9. **Header navigation** — add favorites link/badge to the site header.
+9. **Header navigation** — add favorites icon + badge to the header in `app/page.tsx` and a "My Favorites" link to the user dropdown in `components/auth-button.tsx`.
 10. **Tests** — write unit and API tests.
-11. **Polish** — animations, accessibility (aria labels), responsive adjustments.
+11. **Polish** — animations, accessibility audit, responsive adjustments.
 
 ---
 
-## 8. Future Enhancements
+## 9. Future Enhancements
 
 - **Favorite counts per product** — show how many users have favorited each item (social proof).
 - **Email notifications** — notify users when a favorited out-of-stock item becomes available.
