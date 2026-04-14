@@ -111,9 +111,9 @@ Add a **"Favorites" filter toggle** to the products section toolbar (alongside t
 - A toggle button or chip labeled "♥ Favorites" that, when active, filters the product grid to only show favorited items.
 - Disabled or hidden when the user is not signed in.
 
-### 5c. (Optional) Favorites Page
+### 5c. Favorites Page
 
-Consider adding a dedicated `/favorites` page accessible from the site navigation:
+Add a dedicated `/favorites` page accessible from the site navigation:
 
 - Shows all favorited products in a grid, with the ability to remove favorites and add items to cart.
 - Includes an empty state message such as *"You haven't favorited anything yet — browse our products to find something you love!"*
