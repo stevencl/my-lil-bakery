@@ -39,6 +39,62 @@ pnpm db:seed      # Reset to sample data
 - **Admin dashboard** - Manage products and orders at `/admin`
 - **Order system** - Track customer orders
 
+## App Routes (Current)
+
+### UI routes
+
+- `/` - Customer storefront (hero, featured products, full catalog, filters, cart sidebar)
+- `/admin` - Admin dashboard (product CRUD + order status management, admin-only)
+- `/checkout/success` - Post-checkout success/confirmation page
+- `/auth/signin` - Sign in (Google, email magic link, credentials)
+- `/auth/signup` - Sign up form
+- `/auth/auth-code-error` - Authentication error fallback page
+
+### API routes
+
+- `GET /api/products` - List products with categories
+- `GET /api/categories` - List categories (+ in-stock product counts)
+- `GET /api/orders` - List all orders (used by admin dashboard)
+- `POST /api/orders/create` - Create order with items
+- `PATCH /api/orders/:id` - Update order status
+- `GET /api/admin/products` - List all products (admin dashboard)
+- `POST|PUT|DELETE /api/admin/products/manage` - Create/update/delete product
+- `GET /api/admin/stats` - Aggregate order statistics
+- `POST /api/auth/signup` - Create account
+- `GET|POST /api/auth/[...nextauth]` - NextAuth handlers
+
+## Exploring a Favourites Feature
+
+There is no favourites model yet, so this is a clean addition path.
+
+### Recommended approach (server-backed, logged-in users)
+
+1. **Data model (Prisma)**
+   - Add `Favorite` model:
+     - `id`, `userId`, `productId`, `createdAt`
+     - Unique constraint on `[userId, productId]`
+   - Add relations on `User` and `Product`.
+2. **API routes**
+   - `GET /api/favorites` -> current user's favorite products
+   - `POST /api/favorites` -> add product to favorites
+   - `DELETE /api/favorites/:productId` -> remove favorite
+3. **UI changes**
+   - Add a heart toggle on product cards in `/`.
+   - If not signed in, clicking heart should prompt sign-in.
+   - Optional: add `?favorites=1` filter in product list.
+4. **State strategy**
+   - Load favorites once after session load and cache in client state/context.
+   - Optimistically update heart toggle, then reconcile with API response.
+5. **Security/permissions**
+   - Require authenticated session in favorites API routes.
+   - Always scope read/write/delete to session user only.
+
+### Lightweight alternative (no DB migration)
+
+- Store favorites in `localStorage` for anonymous + logged-out users first.
+- Later migrate to server-backed favorites and sync on login.
+- This is fastest to ship but does not persist across devices.
+
 ## Tech We're Using
 
 - Next.js 15 (App Router)
