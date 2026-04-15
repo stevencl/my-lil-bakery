@@ -52,11 +52,11 @@ Use localStorage first, aligned with existing cart pattern:
 
 Move favourites to backend for cross-device persistence:
 
-- Prisma `Favorite` model with unique `[userId, productId]`.
+- Prisma `Favourite` model with unique `[userId, productId]`.
 - API routes:
-  - `GET /api/favorites`
-  - `POST /api/favorites`
-  - `DELETE /api/favorites/:productId`
+  - `GET /api/favourites`
+  - `POST /api/favourites`
+  - `DELETE /api/favourites/:productId`
 - When signed in, sync local + server favourites with conflict-safe merge.
 
 ## File Change Plan
