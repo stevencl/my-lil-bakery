@@ -63,9 +63,9 @@ pnpm db:seed      # Reset to sample data
 - `POST /api/auth/signup` - Create account
 - `GET|POST /api/auth/[...nextauth]` - NextAuth handlers
 
-## Exploring a Favourites Feature
+## Exploring a Favorites Feature
 
-There is no favourites model yet, so this is a clean addition path.
+There is no favorites model yet, so this is a clean addition path.
 
 ### Recommended approach (server-backed, logged-in users)
 
