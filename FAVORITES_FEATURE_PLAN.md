@@ -5,6 +5,7 @@ Allow signed-in users to mark bakery products as favorites, view those saved ite
 
 ## Scope (MVP)
 - Add a **favorite/unfavorite toggle** on product cards.
+- Add a **favorite/unfavorite toggle** for items in the shopping cart.
 - Persist favorites per user in the database.
 - Expose a way to **list a user’s favorites** (section or page).
 - Keep favorites independent from cart behavior.
@@ -26,6 +27,7 @@ Allow signed-in users to mark bakery products as favorites, view those saved ite
 
 ### 3) UI Integration
 - Add a heart icon button on each product card.
+- Add the same favorite action within the cart item row.
 - Show correct state (favorited vs not favorited).
 - Optimistically update UI and reconcile with server response.
 - Add a “My Favorites” view/section to quickly access saved items.
@@ -35,12 +37,13 @@ Allow signed-in users to mark bakery products as favorites, view those saved ite
   - favorite creation/removal rules
   - duplicate favorite prevention
   - auth-protected access
-  - favorite toggle rendering/state transitions
+  - favorite toggle rendering/state transitions on product cards and in cart rows
 
 ### 5) Rollout & Validation
 - Validate lint, typecheck, tests, and build.
 - Manually verify key flows:
   - favorite add/remove
+  - favorite add/remove from cart
   - favorites persist across refresh/login
   - non-auth users are prompted to sign in
 
