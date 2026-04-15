@@ -52,7 +52,7 @@ Use localStorage first, aligned with existing cart pattern:
 
 Move favourites to backend for cross-device persistence:
 
-- Prisma `Favorite` model with unique `[userId, productId]`.
+- Prisma `Favourite` model with unique `[userId, productId]`.
 - API routes:
   - `GET /api/favourites`
   - `POST /api/favourites`
