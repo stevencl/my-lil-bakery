@@ -5,7 +5,6 @@ import "./globals.css"
 import { CartProvider } from "@/components/cart-context"
 import { SessionProvider } from "@/components/session-provider"
 import { Toaster } from "@/components/ui/sonner"
-import { BirthdayNotification } from "@/components/birthday-notification"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -25,7 +24,6 @@ export default function RootLayout({
       <body className={inter.className}>
         <SessionProvider>
           <CartProvider>
-            <BirthdayNotification />
             {children}
             <Toaster />
           </CartProvider>
