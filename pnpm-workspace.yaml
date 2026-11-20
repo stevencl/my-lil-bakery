@@ -1,0 +1,15 @@
+# pnpm 11 and later read these settings only from this file, not from .npmrc.
+nodeLinker: hoisted
+shamefullyHoist: true
+strictPeerDependencies: false
+preferOffline: true
+
+# Dependencies allowed to run install scripts. Without this, pnpm stops the install
+# with ERR_PNPM_IGNORED_BUILDS.
+allowBuilds:
+  '@prisma/client': true
+  '@prisma/engines': true
+  esbuild: true
+  prisma: true
+  sharp: true
+  unrs-resolver: true
