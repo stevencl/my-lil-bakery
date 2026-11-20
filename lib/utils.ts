@@ -11,7 +11,7 @@ export function cn(...inputs: ClassValue[]) {
  */
 export function formatPhoneNumber(
   phoneNumber: string | null | undefined,
-  format: 'US' | 'international' = 'US'
+  _format: 'US' | 'international' = 'US'
 ): string {
   if (!phoneNumber) return ''
   else return phoneNumber
