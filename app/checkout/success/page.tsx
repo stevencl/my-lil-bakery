@@ -1,13 +1,22 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { Suspense, useEffect, useState } from "react"
 import Link from "next/link"
 import { useSearchParams } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { CheckCircle, Home, ShoppingBag, Calendar, Package } from "lucide-react"
 
+// useSearchParams needs a Suspense boundary, or the production build fails to prerender this page.
 export default function CheckoutSuccessPage() {
+  return (
+    <Suspense>
+      <CheckoutSuccessContent />
+    </Suspense>
+  )
+}
+
+function CheckoutSuccessContent() {
   const searchParams = useSearchParams()
   const [orderReference, setOrderReference] = useState<string>("")
 
