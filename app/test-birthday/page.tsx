@@ -86,10 +86,10 @@ export default function TestBirthdayPage() {
           <div className="mt-6 p-4 bg-blue-50 rounded-lg text-sm">
             <h4 className="font-bold mb-2">How to Test:</h4>
             <ol className="list-decimal list-inside space-y-1">
-              <li>Click "Fill Test Date" to populate a date 5 days from today</li>
+              <li>Click &quot;Fill Test Date&quot; to populate a date 5 days from today</li>
               <li>Or manually enter your actual date of birth</li>
-              <li>Click "Test Birthday Logic" to see if notification should show</li>
-              <li>Check if "Should Show Notification" is YES</li>
+              <li>Click &quot;Test Birthday Logic&quot; to see if notification should show</li>
+              <li>Check if &quot;Should Show Notification&quot; is YES</li>
             </ol>
           </div>
 
