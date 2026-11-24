@@ -18,7 +18,8 @@
     "start": "next start",
     "test": "jest",
     "test:watch": "jest --watch",
-    "typecheck": "tsc --noEmit --incremental --tsBuildInfoFile .tscache"
+    "typecheck": "tsc --noEmit --incremental --tsBuildInfoFile .tscache",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "@auth/core": "^0.34.2",
@@ -59,6 +60,7 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",
     "@next/bundle-analyzer": "^15.5.2",
+    "@playwright/test": "^1.65.1",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.0.1",

@@ -81,3 +81,4 @@ The workflow uses Node.js 22 LTS and pnpm for package management.
 - Database issues? Run `pnpm db:migrate`
 - Want fresh data? Run `pnpm db:seed`
 - Tests failing? Check `pnpm test`
+- Contributing? See [CONTRIBUTING.md](CONTRIBUTING.md).

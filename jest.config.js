@@ -14,7 +14,8 @@ const customJestConfig = {
     "<rootDir>/.next/",
     "<rootDir>/node_modules/",
     "<rootDir>/__tests__/__mocks__/",
-    "<rootDir>/__tests__/test-utils.ts"
+    "<rootDir>/__tests__/test-utils.ts",
+    "<rootDir>/e2e/"
   ],
   collectCoverageFrom: [
     "app/**/*.{js,jsx,ts,tsx}",
